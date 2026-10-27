@@ -1,0 +1,10 @@
+{
+  "package": "frappe-ui",
+  "version": "1.0.0-rc.2",
+  "license": "MIT",
+  "source": "https://registry.npmjs.org/frappe-ui/-/frappe-ui-1.0.0-rc.2.tgz",
+  "integrity": "sha512-sLsoWGmgzhdeyfOmwzDwD5ZrJh3VZ0mA2a7lf9rwxyYCfZKSGAp/qXSO002+CbVuIWqYA3sGuPbl9Dn2+m1n/A==",
+  "files": ["tailwind/tokens.js", "tailwind/tokens/colors.js", "tailwind/tokens/effects.js", "tailwind/tokens/radius.js", "tailwind/tokens/typography.js"],
+  "reference": "C:/Users/skans/frappe-crm/crm/frontend/package.json",
+  "fonts": "src/fonts/Inter: Inter.var.woff2 and Inter-Italic.var.woff2, unmodified"
+}

@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Typecheck, unit tests, builds
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.20.0
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm audit:design
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm --filter @mp/dashboard build
+      - name: OpenAPI document is up to date
+        run: |
+          pnpm openapi
+          git diff --exit-code docs/api/openapi.json
+
+  integration:
+    name: Integration, SMTP and security suites
+    runs-on: ubuntu-24.04
+    needs: checks
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.20.0
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Start mail infrastructure (all outbound mail is captured locally)
+        run: |
+          mkdir -p .data/postfix-log
+          docker compose up -d --build --wait
+      - name: Allow the runner to read the Postfix log
+        run: sudo chmod -R a+rX .data/postfix-log
+      - name: Run suites
+        env:
+          TEST_BOUNCE_BIND: 0.0.0.0
+        run: pnpm test:integration
+      - name: Postfix log on failure
+        if: failure()
+        run: sudo tail -n 200 .data/postfix-log/maillog
+
+  images:
+    name: Production images build
+    runs-on: ubuntu-24.04
+    needs: checks
+    strategy:
+      matrix:
+        include:
+          - { dir: apps/api, entry: server }
+          - { dir: services/mail-worker, entry: main }
+          - { dir: services/delivery-reconciler, entry: main }
+          - { dir: services/bounce-processor, entry: main }
+          - { dir: services/webhook-dispatcher, entry: main }
+          - { dir: services/domain-verifier, entry: main }
+          - { dir: services/smtp-submission, entry: main }
+          - { dir: packages/database, entry: migrate }
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f infrastructure/docker/app.Dockerfile --build-arg SERVICE_DIR=${{ matrix.dir }} --build-arg ENTRY=${{ matrix.entry }} .

@@ -1,0 +1,38 @@
+{
+  "providerId": "www.mailer.mymorphix.com",
+  "providerName": "mymorphix Mailer",
+  "serviceId": "mail",
+  "serviceName": "Mail",
+  "version": 1,
+  "syncPubKeyDomain": "www.mailer.mymorphix.com",
+  "syncRedirectDomain": "www.mailer.mymorphix.com",
+  "description": "Configure email ownership, signing and a custom return path.",
+  "records": [
+    {
+      "type": "TXT",
+      "host": "%ownershipHost%",
+      "data": "%ownershipValue%",
+      "ttl": 3600
+    },
+    {
+      "type": "TXT",
+      "host": "%dkimHost%",
+      "data": "%dkimValue%",
+      "ttl": 3600
+    },
+    {
+      "type": "MX",
+      "host": "%returnMxHost%",
+      "pointsTo": "%returnMxValue%",
+      "priority": "%returnMxPriority%",
+      "ttl": 3600
+    },
+    {
+      "type": "TXT",
+      "host": "%returnSpfHost%",
+      "data": "%returnSpfValue%",
+      "ttl": 3600
+    }
+  ],
+  "logoUrl": "https://www.mailer.mymorphix.com/brand/domain-connect-logo.svg"
+}

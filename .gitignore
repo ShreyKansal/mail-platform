@@ -1,0 +1,13 @@
+node_modules/
+dist/
+coverage/
+.turbo/
+.vercel/
+.env
+.env.*.local
+.data/
+*.log
+*.tsbuildinfo
+.DS_Store
+/packages/morphmailer/*.tgz
+/apps/dashboard/public/downloads/*.tgz

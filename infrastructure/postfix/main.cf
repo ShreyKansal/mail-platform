@@ -1,0 +1,60 @@
+# MAIL_PLATFORM outbound MTA configuration.
+# Environment-specific values are applied by entrypoint.sh with `postconf -e`.
+# See docs/smtp/POSTFIX-ARCHITECTURE.md for the rationale behind each block.
+
+compatibility_level = 3.6
+
+# --- Identity -------------------------------------------------------------
+# myhostname must match the PTR record of the outbound IP (FCrDNS).
+myhostname = mta.mail-platform.test
+myorigin = $myhostname
+smtp_helo_name = $myhostname
+smtpd_banner = $myhostname ESMTP
+
+# --- No local delivery, no open relay -------------------------------------
+mydestination =
+local_transport = error:5.1.1 local delivery is disabled
+alias_maps =
+alias_database =
+inet_protocols = ipv4
+mynetworks_style = host
+smtpd_client_restrictions = permit_mynetworks, reject
+smtpd_relay_restrictions = permit_mynetworks, reject
+smtpd_recipient_restrictions = permit_mynetworks, reject
+disable_vrfy_command = yes
+# The application composes complete messages; do not rewrite them.
+local_header_rewrite_clients =
+always_add_missing_headers = no
+
+# --- Logging (parsed by delivery-reconciler) ------------------------------
+maillog_file = /var/log/postfix/maillog
+enable_long_queue_ids = yes
+
+# --- Routing --------------------------------------------------------------
+# VERP bounce addresses are routed straight to the bounce processor.
+transport_maps = regexp:/etc/postfix/transport_regexp
+smtp_host_lookup = dns, native
+
+# --- Outbound TLS ---------------------------------------------------------
+smtp_tls_security_level = may
+smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+smtp_tls_loglevel = 1
+smtp_tls_note_starttls_offer = yes
+smtp_tls_protocols = >=TLSv1.2
+smtp_tls_mandatory_protocols = >=TLSv1.2
+
+# --- Retry ownership: Postfix retries; the application never re-submits ---
+maximal_queue_lifetime = 2d
+bounce_queue_lifetime = 1d
+minimal_backoff_time = 300s
+maximal_backoff_time = 4000s
+queue_run_delay = 300s
+delay_warning_time = 0h
+
+# --- Limits ---------------------------------------------------------------
+message_size_limit = 41943040
+smtp_connect_timeout = 30s
+smtp_helo_timeout = 60s
+default_destination_concurrency_limit = 10
+smtp_destination_rate_delay = 0s
+smtputf8_enable = yes

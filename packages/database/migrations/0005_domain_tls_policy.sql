@@ -1,0 +1,1 @@
+ALTER TABLE "domains" ADD COLUMN "tls_policy" text DEFAULT 'opportunistic' NOT NULL;

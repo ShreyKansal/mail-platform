@@ -1,0 +1,1 @@
+ALTER TABLE "organizations" ADD COLUMN "local_unlimited_sending" boolean;

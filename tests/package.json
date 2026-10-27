@@ -1,0 +1,36 @@
+{
+  "name": "@mp/tests",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test:integration": "vitest run --config vitest.integration.config.ts"
+  },
+  "dependencies": {
+    "@mp/api": "workspace:*",
+    "@mp/bounce-processor": "workspace:*",
+    "@mp/contracts": "workspace:*",
+    "@mp/core": "workspace:*",
+    "@mp/database": "workspace:*",
+    "@mp/delivery-reconciler": "workspace:*",
+    "@mp/dns-verification": "workspace:*",
+    "@mp/mail-protocol": "workspace:*",
+    "@mp/mail-worker": "workspace:*",
+    "@mp/shared": "workspace:*",
+    "@mp/smtp-submission": "workspace:*",
+    "@mp/webhook-dispatcher": "workspace:*",
+    "ioredis": "5.11.1",
+    "mailauth": "4.13.3",
+    "nodemailer": "7.0.13",
+    "pg": "8.23.1",
+    "selfsigned": "2.4.1",
+    "smtp-server": "3.20.2"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "7.0.12",
+    "@types/pg": "8.23.1",
+    "@types/smtp-server": "3.5.13",
+    "fastify": "5.12.7"
+  }
+}

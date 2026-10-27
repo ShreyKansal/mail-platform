@@ -1,0 +1,73 @@
+import { forwardRef, type SVGProps } from 'react';
+import { CreditCard as CreditCardGlyph, Plug as PlugGlyph, User as UserGlyph } from 'lucide-react';
+import { Settings as SettingsGlyph, SunMoon as SunMoonGlyph, ArrowLeftRight as ArrowLeftRightGlyph, LogOut as LogOutGlyph } from 'lucide-react';
+import { ChevronsUpDown as ChevronsUpDownGlyph, PanelLeftClose as PanelLeftCloseGlyph, PanelLeftOpen as PanelLeftOpenGlyph, Menu as MenuGlyph, X as XGlyph, Bell as BellGlyph, CircleHelp as HelpGlyph, Search as SearchGlyph, ChevronDown as ChevronDownGlyph, Mail as MailGlyph, Clock as ClockGlyph, GitBranch as GitBranchGlyph, Trash2 as Trash2Glyph, Plus as PlusGlyph, Scan as ScanGlyph, Webhook as WebhookGlyph, ZoomIn as ZoomInGlyph, ZoomOut as ZoomOutGlyph, RotateCw as RotateCwGlyph, Copy as CopyGlyph, Send as SendGlyph, Filter as FilterGlyph, Code2 as Code2Glyph, Ellipsis as MoreHorizontalGlyph, ArrowRight as ArrowRightGlyph, CircleCheck as CheckCircleGlyph, Circle as CheckCircleUncheckedGlyph, CircleAlert as CircleAlertGlyph, Loader2 as Loader2Glyph, ArrowLeft as ArrowLeftGlyph, BookOpen as BookOpenGlyph, CalendarDays as CalendarDaysGlyph, ArrowDown as ArrowDownGlyph, ArrowUp as ArrowUpGlyph, ArrowUpDown as ArrowUpDownGlyph, ChevronLeft as ChevronLeftGlyph, ChevronRight as ChevronRightGlyph, Settings2 as Settings2Glyph, Download as DownloadGlyph, Check as CheckGlyph, Circle as CircleGlyph, ChartNoAxesCombined as ChartNoAxesCombinedGlyph, Megaphone as RadioGlyph, Workflow as WorkflowGlyph, Users as UsersGlyph, FileText as FileTextGlyph, LayoutDashboard as LayoutDashboardGlyph, Globe as GlobeGlyph, KeyRound as KeyRoundGlyph, ScrollText as ScrollTextGlyph, ShieldBan as ShieldBanGlyph, type LucideIcon } from 'lucide-react';
+
+export interface MaterialIconProps extends SVGProps<SVGSVGElement> { label?: string; size?: number | 'small' | 'medium' | 'large'; }
+/** Frappe CRM uses Lucide. Preserve the mailer's accessible icon API. */
+function frappeIcon(Icon: LucideIcon) {
+  return forwardRef<SVGSVGElement, MaterialIconProps>(function ProductIcon({ label, size = 16, ...props }, ref) {
+    const dimension = typeof size === 'number' ? size : { small: 14, medium: 16, large: 20 }[size];
+    const accessible = label || props['aria-label'] || props['aria-labelledby'];
+    return <Icon ref={ref} width={dimension} height={dimension} strokeWidth={1.5} focusable="false" role={accessible ? 'img' : undefined} aria-label={label || undefined} aria-hidden={accessible ? undefined : true} {...props} />;
+  });
+}
+export type MaterialIcon = ReturnType<typeof frappeIcon>;
+export const Settings = frappeIcon(SettingsGlyph);
+export const SunMoon = frappeIcon(SunMoonGlyph);
+export const ArrowLeftRight = frappeIcon(ArrowLeftRightGlyph);
+export const LogOut = frappeIcon(LogOutGlyph);
+export const CreditCard = frappeIcon(CreditCardGlyph);
+export const Plug = frappeIcon(PlugGlyph);
+export const User = frappeIcon(UserGlyph);
+export const ChevronsUpDown = frappeIcon(ChevronsUpDownGlyph);
+export const PanelLeftClose = frappeIcon(PanelLeftCloseGlyph);
+export const PanelLeftOpen = frappeIcon(PanelLeftOpenGlyph);
+export const Menu = frappeIcon(MenuGlyph);
+export const X = frappeIcon(XGlyph);
+export const Bell = frappeIcon(BellGlyph);
+export const Help = frappeIcon(HelpGlyph);
+export const Search = frappeIcon(SearchGlyph);
+export const ChevronDown = frappeIcon(ChevronDownGlyph);
+export const Mail = frappeIcon(MailGlyph);
+export const Clock = frappeIcon(ClockGlyph);
+export const GitBranch = frappeIcon(GitBranchGlyph);
+export const Trash2 = frappeIcon(Trash2Glyph);
+export const Plus = frappeIcon(PlusGlyph);
+export const Scan = frappeIcon(ScanGlyph);
+export const Webhook = frappeIcon(WebhookGlyph);
+export const ZoomIn = frappeIcon(ZoomInGlyph);
+export const ZoomOut = frappeIcon(ZoomOutGlyph);
+export const RotateCw = frappeIcon(RotateCwGlyph);
+export const Copy = frappeIcon(CopyGlyph);
+export const Send = frappeIcon(SendGlyph);
+export const Filter = frappeIcon(FilterGlyph);
+export const Code2 = frappeIcon(Code2Glyph);
+export const MoreHorizontal = frappeIcon(MoreHorizontalGlyph);
+export const ArrowRight = frappeIcon(ArrowRightGlyph);
+export const CheckCircle = frappeIcon(CheckCircleGlyph);
+export const CheckCircleUnchecked = frappeIcon(CheckCircleUncheckedGlyph);
+export const CircleAlert = frappeIcon(CircleAlertGlyph);
+export const Loader2 = frappeIcon(Loader2Glyph);
+export const ArrowLeft = frappeIcon(ArrowLeftGlyph);
+export const BookOpen = frappeIcon(BookOpenGlyph);
+export const CalendarDays = frappeIcon(CalendarDaysGlyph);
+export const ArrowDown = frappeIcon(ArrowDownGlyph);
+export const ArrowUp = frappeIcon(ArrowUpGlyph);
+export const ArrowUpDown = frappeIcon(ArrowUpDownGlyph);
+export const ChevronLeft = frappeIcon(ChevronLeftGlyph);
+export const ChevronRight = frappeIcon(ChevronRightGlyph);
+export const Settings2 = frappeIcon(Settings2Glyph);
+export const Download = frappeIcon(DownloadGlyph);
+export const Check = frappeIcon(CheckGlyph);
+export const Circle = frappeIcon(CircleGlyph);
+export const ChartNoAxesCombined = frappeIcon(ChartNoAxesCombinedGlyph);
+export const Radio = frappeIcon(RadioGlyph);
+export const Workflow = frappeIcon(WorkflowGlyph);
+export const Users = frappeIcon(UsersGlyph);
+export const FileText = frappeIcon(FileTextGlyph);
+export const LayoutDashboard = frappeIcon(LayoutDashboardGlyph);
+export const Globe = frappeIcon(GlobeGlyph);
+export const KeyRound = frappeIcon(KeyRoundGlyph);
+export const ScrollText = frappeIcon(ScrollTextGlyph);
+export const ShieldBan = frappeIcon(ShieldBanGlyph);

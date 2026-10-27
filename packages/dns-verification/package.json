@@ -1,0 +1,19 @@
+{
+  "name": "@mp/dns-verification",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@mp/mail-protocol": "workspace:*",
+    "@mp/shared": "workspace:*",
+    "mailauth": "4.13.3",
+    "tldts": "7.4.19"
+  }
+}

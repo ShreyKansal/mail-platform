@@ -1,0 +1,81 @@
+# Local development infrastructure. Application services run on the host
+# (`pnpm dev:*`) so they can be debugged; everything here binds to 127.0.0.1.
+#
+# Mail safety: Postfix relays ALL outbound mail to Mailpit (RELAYHOST), except
+# *@mx-sim.test which goes to the scriptable MX simulator. Nothing leaves the machine.
+name: mail-platform
+
+services:
+  postgres:
+    image: postgres:17.5-alpine
+    environment:
+      POSTGRES_USER: mp_owner
+      POSTGRES_PASSWORD: ${POSTGRES_OWNER_PASSWORD:-mp_owner_dev}
+      POSTGRES_DB: mail_platform
+      MP_APP_PASSWORD: ${MP_APP_PASSWORD:-mp_app_dev}
+      MP_SERVICE_PASSWORD: ${MP_SERVICE_PASSWORD:-mp_service_dev}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./infrastructure/docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mp_owner -d mail_platform"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7.4.4-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  mailpit:
+    image: axllent/mailpit:v1.25.1
+    ports:
+      - "127.0.0.1:8025:8025"
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: "true"
+      MP_SMTP_AUTH_ALLOW_INSECURE: "true"
+
+  mx-simulator:
+    build: ./infrastructure/docker/mx-simulator
+    environment:
+      GREYLIST_SECONDS: "20"
+
+  postfix:
+    build: ./infrastructure/postfix
+    depends_on:
+      - mailpit
+      - mx-simulator
+    environment:
+      MTA_HOSTNAME: mta.mail-platform.test
+      # Docker Desktop forwards published ports from a private-range gateway.
+      MTA_TRUSTED_NETWORKS: "172.16.0.0/12 192.168.0.0/16 10.0.0.0/8"
+      RELAYHOST: "[mailpit]:1025"
+      BOUNCE_PROCESSOR_HOST: host.docker.internal
+      BOUNCE_PROCESSOR_PORT: "2525"
+      MX_SIMULATOR: "mx-simulator:2525"
+      MAXIMAL_QUEUE_LIFETIME: "10m"
+      MINIMAL_BACKOFF_TIME: "15s"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "127.0.0.1:10025:10025"
+      - "127.0.0.1:10026:10026"
+    volumes:
+      - postfix-queue:/var/spool/postfix
+      - ./.data/postfix-log:/var/log/postfix
+
+volumes:
+  postgres-data:
+  redis-data:
+  postfix-queue:

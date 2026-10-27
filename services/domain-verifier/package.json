@@ -1,0 +1,21 @@
+{
+  "name": "@mp/domain-verifier",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch --env-file=../../.env src/main.ts",
+    "build": "tsup src/main.ts --config ../../tsup.config.ts",
+    "start": "node --enable-source-maps dist/main.js",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@mp/core": "workspace:*",
+    "@mp/database": "workspace:*",
+    "@mp/dns-verification": "workspace:*",
+    "@mp/observability": "workspace:*",
+    "@mp/shared": "workspace:*",
+    "zod": "3.25.76"
+  }
+}

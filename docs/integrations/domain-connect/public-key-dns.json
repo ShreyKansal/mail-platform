@@ -1,0 +1,22 @@
+{
+  "records": [
+    {
+      "type": "TXT",
+      "name": "_dcpubkeyv1.www.mailer.mymorphix.com",
+      "value": "p=1,a=RS256,d=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAywWmvcaRsYZ6EH38iUGz2TGFRQEYT+DIXuT9v6+XZQ5uGWLzqLwiZ3N0wG1/4cfM/Nk1n9DgXCTxKBqhuWpW/XWDpmRgA7/A6qHR4vbCO5wP225YxkedyJeCqtWcijPamGrI0aZ2",
+      "ttl": 3600
+    },
+    {
+      "type": "TXT",
+      "name": "_dcpubkeyv1.www.mailer.mymorphix.com",
+      "value": "p=2,a=RS256,d=Rzu1eAudAG39yswlAlmaTluwzj3FesgxpWljXiCJhvv+ZByfzM3FTBNBai+5AXtinwCs/8nfSYZkLwPzFdYiwTsC4ksPqQ6aS29OSF0QFtlRuO4i4ZaEP2WCrzRopBTZukEkb5k72enQMJyfTEmVYZE2d8oKE2JLtrqwmAuMpc1zwgQc2n0M",
+      "ttl": 3600
+    },
+    {
+      "type": "TXT",
+      "name": "_dcpubkeyv1.www.mailer.mymorphix.com",
+      "value": "p=3,a=RS256,d=C6G4eR4G8PiTaiikWdg6MkSNBwIDAQAB",
+      "ttl": 3600
+    }
+  ]
+}

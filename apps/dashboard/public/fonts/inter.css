@@ -1,0 +1,15 @@
+/* Frappe UI Inter 3.19 (SIL OFL). Served unchanged to preserve distinct font faces. */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/FrappeInter.var.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/FrappeInter-Italic.var.woff2') format('woff2');
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}

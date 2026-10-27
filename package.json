@@ -1,0 +1,46 @@
+{
+  "name": "mail-platform",
+  "private": true,
+  "version": "0.1.0",
+  "description": "MAIL_PLATFORM — multi-tenant email infrastructure with its own SMTP delivery",
+  "type": "module",
+  "packageManager": "pnpm@9.15.4",
+  "engines": {
+    "node": ">=24.0.0 <25"
+  },
+  "scripts": {
+    "build:vercel": "node scripts/build-vercel.mjs",
+    "sdk:bundle": "pnpm --filter morphmailer build && node scripts/package-sdk.mjs",
+    "audit:design": "node scripts/sync-frappe-tokens.mjs --check && node scripts/audit-design.mjs",
+    "audit:resend": "node scripts/audit-resend.mjs",
+    "audit:resend:offline": "node scripts/audit-resend.mjs --offline",
+    "dev": "turbo run dev --filter=@mp/api --filter=@mp/dashboard --filter=./services/*",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:integration": "pnpm --filter @mp/tests test:integration",
+    "dev:infra": "docker compose up -d --build --wait",
+    "dev:infra:down": "docker compose down",
+    "db:generate": "pnpm --filter @mp/database generate",
+    "db:migrate": "pnpm --filter @mp/database migrate",
+    "dev:api": "pnpm --filter @mp/api dev",
+    "dev:dashboard": "pnpm --filter @mp/dashboard dev",
+    "dev:worker": "pnpm --filter @mp/mail-worker dev",
+    "dev:reconciler": "pnpm --filter @mp/delivery-reconciler dev",
+    "dev:bounces": "pnpm --filter @mp/bounce-processor dev",
+    "dev:webhooks": "pnpm --filter @mp/webhook-dispatcher dev",
+    "dev:verifier": "pnpm --filter @mp/domain-verifier dev",
+    "dev:smtp": "pnpm --filter @mp/smtp-submission dev",
+    "openapi": "pnpm --filter @mp/api openapi",
+    "setup": "node scripts/init-env.mjs",
+    "pin-deps": "node scripts/pin-deps.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "tsup": "8.5.1",
+    "tsx": "4.23.15",
+    "turbo": "2.11.10",
+    "typescript": "5.8.3",
+    "vitest": "3.2.7"
+  }
+}

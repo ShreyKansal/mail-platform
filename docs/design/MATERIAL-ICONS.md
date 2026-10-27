@@ -1,0 +1,11 @@
+# Material icon system
+
+Product icons use Google's Material Symbols Outlined SVGs. This replaces the app-owned Lucide and Atlaskit icons in navigation, header, actions, tables, menus, feedback and the automation editor. The development-only Atlaskit catalog retains its original sample icon to demonstrate the installed package accurately. Icons internal to retained Atlaskit components remain owned by those components.
+
+Source: https://github.com/google/material-design-icons, Apache-2.0, pinned revision `10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7`. `scripts/sync-material-icons.mjs` downloads the selected 24px outlined SVGs and their license. Their original paths and view boxes are stored in `apps/dashboard/src/components/icons/paths.json`; no icon-font or external request is needed at runtime. The distributed license is available at `/licenses/material-symbols-LICENSE.txt`.
+
+Use the named components exported by `components/icons`, not imports from competing icon sets. Names describe the product role; each component records its original Material name in `data-material-icon` for inspection. Preserve `currentColor` for semantic theme colors. These are filled SVG paths defining an outlined shape; do not add stroke-width styling.
+
+Default size is 20px; navigation retains the established 18px size, compact secondary controls can use 16px, and illustration-like status marks can use 24px. Buttons respect explicit icon dimensions. Icon-only buttons need an accessible label on the button. Decorative icons are hidden from assistive technology by default; standalone meaningful icons accept `label` or standard ARIA naming. Text continues to use Inter.
+
+Verification: dashboard typecheck, 32 tests, production build and design audit passed. Browser fixtures checked 20 development route/theme combinations and five production contexts (1440px light, 390px light, 320px light, 1280px dark and increased contrast). Material paths rendered, navigation measured 18px and header actions 20px, menus and side sheets remained usable, and checked views had no page overflow or Axe violations. Screenshots: `.data/ui-check/material-icons-*.png`. Lucide imports and the unused dependency were removed.

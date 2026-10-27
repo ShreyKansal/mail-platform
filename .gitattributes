@@ -1,0 +1,7 @@
+* text=auto
+*.sh text eol=lf
+*.cf text eol=lf
+*.mjs text eol=lf
+infrastructure/postfix/* text eol=lf
+infrastructure/docker/** text eol=lf
+*.cmd text eol=crlf

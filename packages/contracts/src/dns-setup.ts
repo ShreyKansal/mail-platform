@@ -1,0 +1,10 @@
+import {z} from 'zod';
+const credential=z.string().trim().min(10).max(512).regex(/^[A-Za-z0-9_-]+$/,'Enter a valid provider credential');
+const cloudflareRequest=z.object({provider:z.literal('cloudflare'),api_token:credential,zone_id:z.string().regex(/^[a-fA-F0-9]{32}$/).optional(),include_dmarc:z.boolean().default(false)}).strict();
+const godaddyRequest=z.object({provider:z.literal('godaddy'),api_key:credential,api_secret:credential,zone_id:z.string().trim().toLowerCase().max(253).regex(/^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9-]{2,63}$/).optional(),include_dmarc:z.boolean().default(false)}).strict();
+export const dnsSetupRequest=z.discriminatedUnion('provider',[cloudflareRequest,godaddyRequest]);
+export const dnsSetupRecord=z.object({purpose:z.enum(['ownership','dkim','return_path_mx','return_path_spf','dmarc']),type:z.enum(['TXT','MX']),host:z.string(),value:z.string(),priority:z.number().nullable(),required:z.boolean(),status:z.enum(['create','existing','conflict']),detail:z.string()});
+export const dnsSetupZone=z.object({id:z.string(),name:z.string()});
+export const dnsSetupPreview=z.object({provider:z.enum(['cloudflare','godaddy']),zone:dnsSetupZone,domain_id:z.string().uuid(),plan_token:z.string(),expires_at:z.string(),records:z.array(dnsSetupRecord)});
+export const dnsSetupApplyRequest=z.discriminatedUnion('provider',[cloudflareRequest.extend({plan_token:z.string().min(1).max(4096)}),godaddyRequest.extend({plan_token:z.string().min(1).max(4096)})]);
+export const dnsSetupResult=z.object({zone:dnsSetupZone,records:z.array(dnsSetupRecord.extend({outcome:z.enum(['created','existing','conflict','failed'])})),created:z.number(),existing:z.number(),conflicts:z.number(),failed:z.number()});

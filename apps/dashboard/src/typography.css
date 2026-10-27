@@ -1,0 +1,31 @@
+/* Font faces are loaded from /fonts/inter.css before the app.
+   Keep them outside the Tailwind/Compiled optimization pipeline: its merged
+   font-face output can discard the normal face when a family has two styles. */
+/* Specificity keeps the product font mapping stable when ADS theme sheets load. */
+:root:root {
+  --frappe-font-sm: normal 420 0.875rem/1.35 "Inter";
+  --ds-font-heading-xxlarge: normal 600 2rem/2.25rem "Inter";
+  --ds-font-heading-xlarge: normal 600 1.75rem/2rem "Inter";
+  --ds-font-heading-large: normal 600 1.5rem/1.75rem "Inter";
+  --ds-font-heading-medium: normal 600 1.25rem/1.35 "Inter";
+  --ds-font-heading-small: normal 600 1rem/1.25rem "Inter";
+  --ds-font-heading-xsmall: normal 600 0.875rem/1.25rem "Inter";
+  --ds-font-heading-xxsmall: normal 600 0.75rem/1rem "Inter";
+  --ds-font-body-large: normal 420 1rem/1.5rem "Inter";
+  --ds-font-body: normal 420 0.875rem/1.35 "Inter";
+  --ds-font-body-small: normal 420 0.75rem/1.35 "Inter";
+  --ds-font-metric-large: normal 600 1.75rem/2rem "Inter";
+  --ds-font-metric-medium: normal 600 1.5rem/1.75rem "Inter";
+  --ds-font-metric-small: normal 600 1rem/1.25rem "Inter";
+  --ds-font-code: normal 420 0.875em/1 "Inter";
+  --ds-font-weight-regular: 420;
+  --ds-font-weight-medium: 500;
+  --ds-font-weight-semibold: 600;
+  --ds-font-weight-bold: 700;
+  --ds-font-family-heading: "Inter";
+  --ds-font-family-body: "Inter";
+  --ds-font-family-code: "Inter";
+  --ds-font-family-brand-heading: "Inter";
+  --ds-font-family-brand-body: "Inter";
+}
+html { font-family: 'Inter'; font-synthesis: none; }

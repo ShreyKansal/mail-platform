@@ -1,0 +1,29 @@
+{
+  "name": "@mp/mail-worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch --env-file=../../.env src/main.ts",
+    "build": "tsup src/main.ts --config ../../tsup.config.ts",
+    "start": "node --enable-source-maps dist/main.js",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@mp/core": "workspace:*",
+    "@mp/database": "workspace:*",
+    "@mp/mail-protocol": "workspace:*",
+    "@mp/observability": "workspace:*",
+    "@mp/shared": "workspace:*",
+    "nodemailer": "7.0.13",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "7.0.12"
+  },
+  "exports": {
+    "./dispatcher": "./src/dispatcher.ts",
+    "./mta": "./src/mta.ts"
+  }
+}
